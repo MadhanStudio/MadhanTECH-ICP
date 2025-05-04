@@ -11,10 +11,11 @@ function RegistPage() {
     establishedDate: '',
     skNumber: '',
     website: '',
-    city: '',
-    province: '',
+    phoneNumber: '',
+    fax: '',
+    address: '',
+    postalCode: '',
     logo: null,
-    agree: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -54,22 +55,25 @@ function RegistPage() {
       newErrors.website = 'Website resmi wajib diisi';
     }
 
-    if (!formData.city || formData.city === 'Pilih Kota') {
-      newErrors.city = 'Pilih kota terlebih dahulu';
+    if (!formData.address.trim()) {
+      newErrors.website = 'Alamat lengkap wajib diisi';
     }
 
-    if (!formData.province || formData.province === 'Pilih Provinsi') {
-      newErrors.province = 'Pilih provinsi terlebih dahulu';
+    if (!formData.phoneNumber.trim()) {
+      newErrors.website = 'Nomor telpon resmi wajib diisi';
+    }
+
+    if (!formData.fax.trim()) {
+      newErrors.website = 'Fax resmi wajib diisi';
+    }
+
+    if (!formData.postalCode.trim()) {
+      newErrors.website = 'Kode pos wajib diisi';
     }
 
     if (!formData.logo) {
       newErrors.logo = 'Logo universitas wajib diunggah';
     }
-
-    if (!formData.agree) {
-      newErrors.agree = 'Anda harus menyetujui syarat & ketentuan';
-    }
-
     return newErrors;
   };
 
@@ -118,14 +122,14 @@ function RegistPage() {
                 <tr>
                   <td colSpan={2}>
                     <Form.Group controlId="universityName">
-                      <Form.Label>Nama Universitas</Form.Label>
+                      <Form.Label>Nama Perguruan Tinggi</Form.Label>
                       <Form.Control
                         className="placeholder-text"
                         type="text"
                         name="universityName"
                         value={formData.universityName}
                         onChange={handleChange}
-                        placeholder="Masukkan nama universitas"
+                        placeholder="Masukkan nama perguruan tinggi"
                       />
                     </Form.Group>
                   </td>
@@ -133,14 +137,14 @@ function RegistPage() {
                 <tr>
                   <td>
                     <Form.Group controlId="internetIdentity">
-                      <Form.Label>Internet Identity</Form.Label>
+                      <Form.Label>Akun Identity</Form.Label>
                       <Form.Control
                         className="placeholder-text"
                         type="text"
                         name="internetIdentity"
                         value={formData.internetIdentity}
                         onChange={handleChange}
-                        placeholder="Masukkan nomor II"
+                        placeholder="Masukkan akun internet identity"
                       />
                     </Form.Group>
                   </td>
@@ -224,39 +228,48 @@ function RegistPage() {
                 <tr>
                   <td>
                     <Form.Group controlId="city">
-                      <Form.Label>Kota</Form.Label>
-                      <Form.Select
+                      <Form.Label>Nomor Telpon</Form.Label>
+                      <Form.Control
                         className="placeholder-text"
-                        name="city"
-                        value={formData.city}
+                        type="text"
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
                         onChange={handleChange}
-                      >
-                        <option>Pilih Kota</option>
-                        <option>Jakarta</option>
-                        <option>Bandung</option>
-                        <option>Surabaya</option>
-                        <option>Yogyakarta</option>
-                        <option>Kota Malang</option>
-                      </Form.Select>
+                        placeholder="+62 XXX-XXXXXX"
+                      />
                     </Form.Group>
                   </td>
                   <td>
                     <Form.Group controlId="province">
-                      <Form.Label>Provinsi</Form.Label>
-                      <Form.Select
+                      <Form.Label>Fax</Form.Label>
+                      <Form.Control
                         className="placeholder-text"
-                        name="province"
-                        value={formData.province}
+                        type="text"
+                        name="fax"
+                        value={formData.fax}
                         onChange={handleChange}
-                      >
-                        <option>Pilih Provinsi</option>
-                        <option>Jawa Barat</option>
-                        <option>Jawa Timur</option>
-                        <option>DKI Jakarta</option>
-                        <option>DI Yogyakarta</option>
-                      </Form.Select>
+                        placeholder="+62 XXX-XXXXXX"
+                      />
                     </Form.Group>
                   </td>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
+                    <Form.Group className="" controlId="skNumber">
+                      <Form.Label>Alamat Lengkap</Form.Label>
+                      <Form.Control
+                        className="placeholder-text"
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        placeholder="Masukkan alamat lengkap resmi"
+                      />
+                    </Form.Group>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Kode Pos</td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
@@ -274,14 +287,11 @@ function RegistPage() {
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    <Form.Group className="" controlId="agree">
-                      <Form.Check
-                        type="checkbox"
-                        name="agree"
-                        checked={formData.agree}
-                        onChange={handleChange}
-                        label="Saya telah membaca dan menyetujui syarat dan ketentuan yang berlaku"
-                      />
+                    <Form.Group>
+                      <i>
+                        *Data yang disertakan merupakan data resmi dan sesuai dengan perguruan
+                        tinggi terkait
+                      </i>
                     </Form.Group>
                   </td>
                 </tr>
