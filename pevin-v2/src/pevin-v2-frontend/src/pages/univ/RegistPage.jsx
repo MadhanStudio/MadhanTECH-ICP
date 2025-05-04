@@ -165,7 +165,7 @@ function RegistPage() {
                 </tr>
                 <tr>
                   <td>
-                    <Form.Group className="" controlId="accreditation">
+                    <Form.Group controlId="accreditation">
                       <Form.Label>Akreditasi</Form.Label>
                       <Form.Select
                         className="placeholder-text"
@@ -181,7 +181,7 @@ function RegistPage() {
                     </Form.Group>
                   </td>
                   <td>
-                    <Form.Group className="" controlId="establishedDate">
+                    <Form.Group controlId="establishedDate">
                       <Form.Label>Tanggal Berdiri</Form.Label>
                       <InputGroup>
                         <Form.Control
@@ -197,7 +197,7 @@ function RegistPage() {
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    <Form.Group className="" controlId="skNumber">
+                    <Form.Group controlId="skNumber">
                       <Form.Label>No. SK Pendirian</Form.Label>
                       <Form.Control
                         className="placeholder-text"
@@ -212,7 +212,7 @@ function RegistPage() {
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    <Form.Group className="" controlId="website">
+                    <Form.Group controlId="website">
                       <Form.Label>Website Resmi</Form.Label>
                       <Form.Control
                         className="placeholder-text"
@@ -227,7 +227,7 @@ function RegistPage() {
                 </tr>
                 <tr>
                   <td>
-                    <Form.Group controlId="city">
+                    <Form.Group controlId="phoneNumber">
                       <Form.Label>Nomor Telpon</Form.Label>
                       <Form.Control
                         className="placeholder-text"
@@ -240,7 +240,7 @@ function RegistPage() {
                     </Form.Group>
                   </td>
                   <td>
-                    <Form.Group controlId="province">
+                    <Form.Group controlId="fax">
                       <Form.Label>Fax</Form.Label>
                       <Form.Control
                         className="placeholder-text"
@@ -255,7 +255,7 @@ function RegistPage() {
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    <Form.Group className="" controlId="skNumber">
+                    <Form.Group controlId="address">
                       <Form.Label>Alamat Lengkap</Form.Label>
                       <Form.Control
                         className="placeholder-text"
@@ -269,11 +269,23 @@ function RegistPage() {
                   </td>
                 </tr>
                 <tr>
-                  <td>Kode Pos</td>
+                  <td colSpan={2}>
+                    <Form.Group controlId="postalCode">
+                      <Form.Label>Kode Pos</Form.Label>
+                      <Form.Control
+                        className="placeholder-text"
+                        type="text"
+                        name="postalCode"
+                        value={formData.postalCode}
+                        onChange={handleChange}
+                        placeholder="Masukkan Kode Pos sesuai dengan alamat"
+                      />
+                    </Form.Group>
+                  </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    <Form.Group className="mb-3" controlId="logo">
+                    <Form.Group controlId="logo">
                       <Form.Label>Logo Universitas (PNG/JPG)</Form.Label>
                       <Form.Control
                         className="placeholder-text"
