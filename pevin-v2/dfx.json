@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "pevin-v2-backend": {
+      "main": "src/pevin-v2-backend/main.mo",
+      "type": "motoko"
+    },
+    "pevin-v2-frontend": {
+      "dependencies": [
+        "pevin-v2-backend"
+      ],
+      "source": [
+        "src/pevin-v2-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "pevin-v2-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
