@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "ijasah_validation_backend": {
+      "main": "src/ijasah_validation_backend/main.mo",
+      "type": "motoko"
+    },
+    "ijasah_validation_frontend": {
+      "dependencies": [
+        "ijasah_validation_backend"
+      ],
+      "source": [
+        "src/ijasah_validation_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "ijasah_validation_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
