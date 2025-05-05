@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Col, Row, Table, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Col, Row, Table, Form, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 function RegistPage() {
@@ -22,10 +22,8 @@ function RegistPage() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    if (type === 'checkbox') {
-      setFormData((prev) => ({ ...prev, [name]: checked }));
-    } else if (type === 'file') {
+    const { name, value, type, files } = e.target;
+    if (type === 'file') {
       setFormData((prev) => ({ ...prev, [name]: files[0] }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -56,19 +54,19 @@ function RegistPage() {
     }
 
     if (!formData.address.trim()) {
-      newErrors.website = 'Alamat lengkap wajib diisi';
+      newErrors.address = 'Alamat lengkap wajib diisi';
     }
 
     if (!formData.phoneNumber.trim()) {
-      newErrors.website = 'Nomor telpon resmi wajib diisi';
+      newErrors.phoneNumber = 'Nomor telpon resmi wajib diisi';
     }
 
     if (!formData.fax.trim()) {
-      newErrors.website = 'Fax resmi wajib diisi';
+      newErrors.fax = 'Fax resmi wajib diisi';
     }
 
     if (!formData.postalCode.trim()) {
-      newErrors.website = 'Kode pos wajib diisi';
+      newErrors.postalCode = 'Kode pos wajib diisi';
     }
 
     if (!formData.logo) {
@@ -111,9 +109,7 @@ function RegistPage() {
         <Col xs={{ order: 'second' }} md={{ order: 'second' }} lg={{ order: 'first' }}>
           <div className="regist-header mt-4">
             <h1 className="regist-title">Registrasi Perguruan Tinggi</h1>
-            <p className="regist-subtitle">
-              Tambahkan data perguruan tinggi pada fromulir di bawah ini.
-            </p>
+            <p className="regist-subtitle">Selamat datang di laman pendaftaran Perguruan Tinggi</p>
           </div>
 
           <div className="cotainer-form">
@@ -130,7 +126,11 @@ function RegistPage() {
                         value={formData.universityName}
                         onChange={handleChange}
                         placeholder="Masukkan nama perguruan tinggi"
+                        isInvalid={!!errors.universityName}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.universityName}
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>
@@ -145,7 +145,11 @@ function RegistPage() {
                         value={formData.internetIdentity}
                         onChange={handleChange}
                         placeholder="Masukkan akun internet identity"
+                        isInvalid={!!errors.internetIdentity}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.internetIdentity}
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </td>
                   <td>
@@ -156,10 +160,12 @@ function RegistPage() {
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
+                        isInvalid={!!errors.status}
                       >
                         <option>Aktif</option>
                         <option>Tidak Aktif</option>
                       </Form.Select>
+                      <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>
@@ -172,25 +178,33 @@ function RegistPage() {
                         name="accreditation"
                         value={formData.accreditation}
                         onChange={handleChange}
+                        isInvalid={!!errors.accreditation}
                       >
                         <option>Unggul</option>
                         <option>Sangat Baik</option>
                         <option>Baik</option>
                         <option>Tidak Terakreditasi</option>
                       </Form.Select>
+                      <Form.Control.Feedback type="invalid">
+                        {errors.accreditation}
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </td>
                   <td>
                     <Form.Group controlId="establishedDate">
                       <Form.Label>Tanggal Berdiri</Form.Label>
                       <InputGroup>
-                        <Form.Control
+                        <FormControl
                           className="placeholder-text"
                           type="date"
                           name="establishedDate"
                           value={formData.establishedDate}
                           onChange={handleChange}
+                          isInvalid={!!errors.establishedDate}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.establishedDate}
+                        </Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
                   </td>
@@ -206,7 +220,11 @@ function RegistPage() {
                         value={formData.skNumber}
                         onChange={handleChange}
                         placeholder="Masukkan Nomor Surat Keputusan Pendirian"
+                        isInvalid={!!errors.skNumber}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.skNumber}
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>
@@ -221,7 +239,9 @@ function RegistPage() {
                         value={formData.website}
                         onChange={handleChange}
                         placeholder="contoh: https://link-website.com"
+                        isInvalid={!!errors.website}
                       />
+                      <Form.Control.Feedback type="invalid">{errors.website}</Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>
@@ -236,7 +256,11 @@ function RegistPage() {
                         value={formData.phoneNumber}
                         onChange={handleChange}
                         placeholder="+62 XXX-XXXXXX"
+                        isInvalid={!!errors.phoneNumber}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.phoneNumber}
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </td>
                   <td>
@@ -249,7 +273,9 @@ function RegistPage() {
                         value={formData.fax}
                         onChange={handleChange}
                         placeholder="+62 XXX-XXXXXX"
+                        isInvalid={!!errors.fax}
                       />
+                      <Form.Control.Feedback type="invalid">{errors.fax}</Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>
@@ -264,7 +290,9 @@ function RegistPage() {
                         value={formData.address}
                         onChange={handleChange}
                         placeholder="Masukkan alamat lengkap resmi"
+                        isInvalid={!!errors.address}
                       />
+                      <Form.Control.Feedback type="invalid">{errors.address}</Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>
@@ -279,7 +307,11 @@ function RegistPage() {
                         value={formData.postalCode}
                         onChange={handleChange}
                         placeholder="Masukkan Kode Pos sesuai dengan alamat"
+                        isInvalid={!!errors.postalCode}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.postalCode}
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>
@@ -293,7 +325,9 @@ function RegistPage() {
                         name="logo"
                         accept="image/png, image/jpeg, image/jpg"
                         onChange={handleChange}
+                        isInvalid={!!errors.logo}
                       />
+                      <Form.Control.Feedback type="invalid">{errors.logo}</Form.Control.Feedback>
                     </Form.Group>
                   </td>
                 </tr>

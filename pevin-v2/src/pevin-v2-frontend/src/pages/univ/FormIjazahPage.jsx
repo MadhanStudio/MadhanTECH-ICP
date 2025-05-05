@@ -1,90 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Col, Row, Table, Form, Button, Nav, Navbar, InputGroup } from 'react-bootstrap';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 function FormIjazahPage() {
-  const location = useLocation();
-  const currentYear = new Date().getFullYear();
-  const minDate = `${currentYear}-01-01`;
-  const maxDate = `${currentYear}-12-31`;
-  const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     id: uuidv4(),
-    mahasiswaName: '',
+    sarjanaName: '',
+    ttl: '',
+    email: '',
+    dosenPA: '',
+    sarjanaPhoneNum: '',
+    program: '',
     entryYear: '',
     graduationYear: '',
     gpa: '',
-    establishedDate: '',
-    ijazahNumber: '',
-    program: '',
-    degree: '',
     ijazahFile: null,
-    agree: false,
     statusValidasi: 'Valid',
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    if (type === 'checkbox') {
-      setFormData((prev) => ({ ...prev, [name]: checked }));
-    } else if (type === 'file') {
+    const { name, value, type, files } = e.target;
+    if (type === 'file') {
       setFormData((prev) => ({ ...prev, [name]: files[0] }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
+  const location = useLocation();
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
+
   const validate = () => {
     const newErrors = {};
 
-    if (!/^[A-Za-z\s]+$/.test(formData.mahasiswaName.trim())) {
-      newErrors.mahasiswaName = 'Nama Mahasiswa hanya boleh berisi huruf';
+    if (!formData.sarjanaName.trim()) {
+      newErrors.sarjanaName = 'Nama sarjana wajib di isi';
     }
 
-    if (!formData.entryYear) {
+    if (!formData.ttl.trim()) {
+      newErrors.ttl = 'Tempat tanggal lahir masuk wajib diisi';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email wajib diisi';
+    }
+
+    if (!formData.dosenPA.trim()) {
+      newErrors.dosenPA = 'Wajib menyantumkan Dosen Pembimbing Akademik';
+    }
+
+    if (!formData.sarjanaPhoneNum.trim()) {
+      newErrors.sarjanaPhoneNum = 'Wajib menyantumkan nomor telpon pemilik ijazah';
+    }
+
+    if (!formData.program.trim()) {
+      newErrors.program = 'Wajib menyertakan program studi pemilik ijazah';
+    }
+
+    if (!formData.entryYear.trim()) {
       newErrors.entryYear = 'Tahun masuk wajib dipilih';
     }
 
-    if (!formData.graduationYear) {
+    if (!formData.graduationYear.trim()) {
       newErrors.graduationYear = 'Tahun kelulusan wajib dipilih';
     }
 
-    if (parseFloat(formData.gpa) > 4.0 || parseFloat(formData.gpa) < 0.0) {
+    if (!formData.gpa.trim()) {
+      newErrors.gpa = 'GPA wajib diisi';
+    } else if (isNaN(parseFloat(formData.gpa))) {
+      newErrors.gpa = 'GPA harus berupa angka';
+    } else if (parseFloat(formData.gpa) > 4.0 || parseFloat(formData.gpa) < 0.0) {
       newErrors.gpa = 'GPA harus di antara 0.00 - 4.00';
-    }
-
-    if (!formData.establishedDate) {
-      newErrors.establishedDate = 'Tanggal terbit wajib diisi';
-    } else {
-      const selectedYear = new Date(formData.establishedDate).getFullYear();
-      if (selectedYear !== currentYear) {
-        newErrors.establishedDate = `Tanggal harus dari tahun ${currentYear}`;
-      }
-    }
-
-    if (!formData.ijazahNumber.trim()) {
-      newErrors.ijazahNumber = 'Nomor Ijazah wajib diisi';
-    }
-
-    if (!/^[A-Za-z0-9\s]+$/.test(formData.program.trim())) {
-      newErrors.program = 'Program studi hanya boleh berisi huruf dan angka';
-    }
-
-    if (!/^[A-Za-z0-9\s.,-]*$/.test(formData.degree.trim())) {
-      newErrors.degree = 'Gelar hanya boleh berisi huruf, angka, atau tanda baca';
     }
 
     if (!formData.ijazahFile) {
       newErrors.ijazahFile = 'File ijazah wajib diunggah';
-    }
-
-    if (!formData.agree) {
-      newErrors.agree = 'Anda harus menyetujui syarat & ketentuan';
     }
 
     return newErrors;
@@ -122,16 +117,16 @@ function FormIjazahPage() {
 
   const handleCancel = () => {
     setFormData({
-      mahasiswaName: '',
+      sarjanaName: '',
+      ttl: '',
+      email: '',
+      dosenPA: '',
+      sarjanaPhoneNum: '',
+      program: '',
       entryYear: '',
       graduationYear: '',
       gpa: '',
-      establishedDate: '',
-      ijazahNumber: '',
-      program: '',
-      degree: '',
       ijazahFile: null,
-      agree: false,
       statusValidasi: 'Valid',
     });
     setResetKey(Date.now());
@@ -175,7 +170,7 @@ function FormIjazahPage() {
             </Container>
           </Navbar>
         </Col>
-        <Col xs={{ order: 'last' }} sm={{ order: 'last' }} md={{ order: 'last' }} lg={9}>
+        <Col lg={9}>
           <Row>
             <Col xs={{ order: 'second' }} md={{ order: 'second' }} lg={{ order: 'second' }}>
               <div className="regist-header mt-4">
@@ -191,19 +186,109 @@ function FormIjazahPage() {
                     <tbody>
                       <tr>
                         <td colSpan={2}>
-                          <Form.Group controlId="mahasiswaName">
-                            <Form.Label>Nama Mahasiswa</Form.Label>
+                          <Form.Group controlId="sarjanaName">
+                            <Form.Label>Nama Sarjana</Form.Label>
                             <Form.Control
                               className="placeholder-text"
                               type="text"
-                              name="mahasiswaName"
-                              value={formData.mahasiswaName}
+                              name="sarjanaName"
+                              value={formData.sarjanaName}
                               onChange={handleChange}
-                              isInvalid={!!errors.mahasiswaName}
-                              placeholder="Masukkan nama mahasiswa di sini"
+                              isInvalid={!!errors.sarjanaName}
+                              placeholder="Masukkan nama pemilik ijazah di sini"
                             />
                             <Form.Control.Feedback type="invalid">
-                              {errors.mahasiswaName}
+                              {errors.sarjanaName}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <Form.Group controlId="ttl">
+                            <Form.Label>Tempat Tanggal Lahir</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="ttl"
+                              value={formData.ttl}
+                              onChange={handleChange}
+                              isInvalid={!!errors.ttl}
+                              placeholder="Masukkan tempat, tanggal lahir"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.ttl}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <Form.Group controlId="email">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleChange}
+                              isInvalid={!!errors.email}
+                              placeholder="Masukkan email, contoh: sarjana@gmail.com"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.email}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <Form.Group controlId="dosenPA">
+                            <Form.Label>Dosen Pendamping Akademik</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="dosenPA"
+                              value={formData.dosenPA}
+                              onChange={handleChange}
+                              isInvalid={!!errors.dosenPA}
+                              placeholder="Masukkan nama Dosen Pembimbing Akademik"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.dosenPA}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <Form.Group controlId="sarjanaPhoneNum">
+                            <Form.Label>Nomor Telpon</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="sarjanaPhoneNum"
+                              value={formData.sarjanaPhoneNum}
+                              onChange={handleChange}
+                              isInvalid={!!errors.sarjanaPhoneNum}
+                              placeholder="Masukkan nomor telpon, contoh: +62 XXX-XXXXX"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.sarjanaPhoneNum}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={2}>
+                          <Form.Group controlId="program">
+                            <Form.Label>Program Studi</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="program"
+                              value={formData.program}
+                              onChange={handleChange}
+                              isInvalid={!!errors.program}
+                              placeholder="Masukkan program studi di sini"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.program}
                             </Form.Control.Feedback>
                           </Form.Group>
                         </td>
@@ -251,7 +336,7 @@ function FormIjazahPage() {
                       <tr>
                         <td>
                           <Form.Group controlId="gpa">
-                            <Form.Label>GPA(IPK)</Form.Label>
+                            <Form.Label>GPA/IPK</Form.Label>
                             <Form.Control
                               type="number"
                               step="0.01"
@@ -261,88 +346,14 @@ function FormIjazahPage() {
                               value={formData.gpa}
                               onChange={handleChange}
                               isInvalid={!!errors.gpa}
-                              placeholder="Masukkan IPK mahasiswa di sini"
+                              placeholder="0.00-4.00"
                             />
-
                             <Form.Control.Feedback type="invalid">
                               {errors.gpa}
                             </Form.Control.Feedback>
                           </Form.Group>
                         </td>
                         <td>
-                          <Form.Group controlId="establishedDate">
-                            <Form.Label>Tanggal Terbit</Form.Label>
-                            <Form.Control
-                              type="date"
-                              name="establishedDate"
-                              value={formData.establishedDate}
-                              onChange={handleChange}
-                              min={minDate}
-                              max={maxDate}
-                              isInvalid={!!errors.establishedDate}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.establishedDate}
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
-                          <Form.Group controlId="ijazahNumber">
-                            <Form.Label>Nomor Ijazah</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="ijazahNumber"
-                              value={formData.ijazahNumber}
-                              onChange={handleChange}
-                              isInvalid={!!errors.ijazahNumber}
-                              placeholder="Masukkan nomor ijazah di sini"
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.ijazahNumber}
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
-                          <Form.Group controlId="program">
-                            <Form.Label>Program Studi</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="program"
-                              value={formData.program}
-                              onChange={handleChange}
-                              isInvalid={!!errors.program}
-                              placeholder="Masukkan program studi di sini"
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.program}
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
-                          <Form.Group controlId="degree">
-                            <Form.Label>Gelar</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="degree"
-                              value={formData.degree}
-                              onChange={handleChange}
-                              isInvalid={!!errors.degree}
-                              placeholder="Masukkan gelar, contoh: S.Pd"
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.degree}
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
                           <Form.Group controlId="ijazahFile">
                             <Form.Label>Unggah File Ijazah (PDF)</Form.Label>
                             <Form.Control
@@ -360,18 +371,8 @@ function FormIjazahPage() {
                       </tr>
                       <tr>
                         <td colSpan={2}>
-                          <Form.Group controlId="agree" className="mt-3">
-                            <Form.Check
-                              type="checkbox"
-                              name="agree"
-                              label="Saya telah membaca dan menyetujui syarat dan ketentuan yang berlaku"
-                              checked={formData.agree}
-                              onChange={handleChange}
-                              isInvalid={!!errors.agree}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              {errors.agree}
-                            </Form.Control.Feedback>
+                          <Form.Group className="mt-3">
+                            <i>*Data ijazah yang diunggah tidak dapat diubah di kemudian hari</i>
                           </Form.Group>
                         </td>
                       </tr>

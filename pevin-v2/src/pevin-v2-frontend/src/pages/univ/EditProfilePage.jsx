@@ -14,9 +14,11 @@ function EditProfilePage() {
     establishedDate: '',
     skNumber: '',
     website: '',
-    city: '',
-    province: '',
-    logo: '',
+    phoneNumber: '',
+    fax: '',
+    address: '',
+    postalCode: '',
+    logo: null,
   });
 
   useEffect(() => {
@@ -49,17 +51,46 @@ function EditProfilePage() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.universityName.trim()) newErrors.universityName = 'Nama universitas wajib diisi';
-    if (!formData.internetIdentity.trim())
+
+    if (!formData.universityName.trim()) {
+      newErrors.universityName = 'Nama universitas wajib diisi';
+    }
+
+    if (!formData.internetIdentity.trim()) {
       newErrors.internetIdentity = 'Internet Identity wajib diisi';
-    if (!formData.establishedDate) newErrors.establishedDate = 'Tanggal berdiri wajib diisi';
-    if (!formData.skNumber.trim()) newErrors.skNumber = 'Nomor SK wajib diisi';
-    if (!formData.website.trim()) newErrors.website = 'Website resmi wajib diisi';
-    if (!formData.city || formData.city === 'Pilih Kota')
-      newErrors.city = 'Pilih kota terlebih dahulu';
-    if (!formData.province || formData.province === 'Pilih Provinsi')
-      newErrors.province = 'Pilih provinsi terlebih dahulu';
-    if (!formData.logo) newErrors.logo = 'Logo universitas wajib diunggah';
+    }
+
+    if (!formData.establishedDate) {
+      newErrors.establishedDate = 'Tanggal berdiri wajib diisi';
+    }
+
+    if (!formData.skNumber.trim()) {
+      newErrors.skNumber = 'Nomor SK wajib diisi';
+    }
+
+    if (!formData.website.trim()) {
+      newErrors.website = 'Website resmi wajib diisi';
+    }
+
+    if (!formData.address.trim()) {
+      newErrors.address = 'Alamat lengkap wajib diisi';
+    }
+
+    if (!formData.phoneNumber.trim()) {
+      newErrors.phoneNumber = 'Nomor telpon resmi wajib diisi';
+    }
+
+    if (!formData.fax.trim()) {
+      newErrors.fax = 'Fax resmi wajib diisi';
+    }
+
+    if (!formData.postalCode.trim()) {
+      newErrors.postalCode = 'Kode pos wajib diisi';
+    }
+
+    if (!formData.logo) {
+      newErrors.logo = 'Logo universitas wajib diunggah';
+    }
     return newErrors;
   };
 
@@ -125,7 +156,7 @@ function EditProfilePage() {
               <div className="regist-header mt-4">
                 <h1 className="regist-title">Edit Profil Perguruan Tinggi</h1>
                 <p className="regist-subtitle">
-                  Ubah data profil Perguruan Tinggi pada formulir di bawah in.
+                  Ubah data profil Perguruan Tinggi pada formulir berikut
                 </p>
               </div>
 
@@ -135,7 +166,7 @@ function EditProfilePage() {
                     <tr>
                       <td colSpan={2}>
                         <Form.Group controlId="universityName">
-                          <Form.Label>Nama Universitas</Form.Label>
+                          <Form.Label>Nama Perguruan Tinggi</Form.Label>
                           <Form.Control
                             type="text"
                             name="universityName"
@@ -230,7 +261,7 @@ function EditProfilePage() {
                     </tr>
                     <tr>
                       <td colSpan={2}>
-                        <Form.Group className="" controlId="website">
+                        <Form.Group controlId="website">
                           <Form.Label>Website Resmi</Form.Label>
                           <Form.Control
                             className="placeholder-text"
@@ -239,47 +270,81 @@ function EditProfilePage() {
                             value={formData.website}
                             onChange={handleChange}
                             placeholder="contoh: https://link-website.com"
+                            isInvalid={!!errors.website}
                           />
+                          <Form.Control.Feedback type="invalid">
+                            {errors.website}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <Form.Group controlId="city">
-                          <Form.Label>Kota</Form.Label>
-                          <Form.Select
-                            name="city"
-                            value={formData.city}
+                        <Form.Group controlId="phoneNumber">
+                          <Form.Label>Nomor Telpon</Form.Label>
+                          <Form.Control
+                            className="placeholder-text"
+                            type="text"
+                            name="phoneNumber"
+                            value={formData.phoneNumber}
                             onChange={handleChange}
-                            isInvalid={!!errors.city}
-                          >
-                            <option>Pilih Kota</option>
-                            <option>Kota Malang</option>
-                            <option>Jakarta</option>
-                            <option>Bandung</option>
-                            <option>Surabaya</option>
-                            <option>Yogyakarta</option>
-                          </Form.Select>
+                            isInvalid={!!errors.phoneNumber}
+                          />
                           <Form.Control.Feedback type="invalid">
-                            {errors.city}
+                            {errors.phoneNumber}
                           </Form.Control.Feedback>
                         </Form.Group>
                       </td>
                       <td>
-                        <Form.Group controlId="province">
-                          <Form.Label>Provinsi</Form.Label>
-                          <Form.Select
+                        <Form.Group controlId="fax">
+                          <Form.Label>Fax</Form.Label>
+                          <Form.Control
                             className="placeholder-text"
-                            name="province"
-                            value={formData.province}
+                            type="text"
+                            name="fax"
+                            value={formData.fax}
                             onChange={handleChange}
-                          >
-                            <option>Pilih Provinsi</option>
-                            <option>Jawa Barat</option>
-                            <option>Jawa Timur</option>
-                            <option>DKI Jakarta</option>
-                            <option>DI Yogyakarta</option>
-                          </Form.Select>
+                            isInvalid={!!errors.fax}
+                          />
+                          <Form.Control.Feedback type="invalid">{errors.fax}</Form.Control.Feedback>
+                        </Form.Group>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colSpan={2}>
+                        <Form.Group controlId="address">
+                          <Form.Label>Alamat Lengkap</Form.Label>
+                          <Form.Control
+                            className="placeholder-text"
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            isInvalid={!!errors.address}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            {errors.address}
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colSpan={2}>
+                        {' '}
+                        <Form.Group controlId="postalCode">
+                          <Form.Label>Kode Pos</Form.Label>
+                          <Form.Control
+                            className="placeholder-text"
+                            type="text"
+                            name="postalCode"
+                            value={formData.postalCode}
+                            onChange={handleChange}
+                            placeholder="Masukkan Kode Pos sesuai dengan alamat"
+                            isInvalid={!!errors.postalCode}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            {errors.postalCode}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </td>
                     </tr>
