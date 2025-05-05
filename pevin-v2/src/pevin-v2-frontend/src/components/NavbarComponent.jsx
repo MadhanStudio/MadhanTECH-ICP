@@ -28,6 +28,8 @@ const NavbarComponent = () => {
   }, [location.pathname]);
 
   return (
+
+
     <>
       {showNavbar && (
         <Navbar
@@ -52,7 +54,6 @@ const NavbarComponent = () => {
               />
             </Navbar.Brand>
 
-            <Navbar.Toggle />
           </Container>
         </Navbar>
       )}
