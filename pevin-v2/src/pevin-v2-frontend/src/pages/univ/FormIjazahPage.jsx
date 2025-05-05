@@ -165,6 +165,11 @@ function FormIjazahPage() {
                       Unggah Ijazah
                     </Nav.Link>
                   )}
+                  {location.pathname !== '/home' && (
+                    <Nav.Link as={Link} to="/home">
+                      Logout
+                    </Nav.Link>
+                  )}
                 </Nav>
               </Navbar.Collapse>
             </Container>

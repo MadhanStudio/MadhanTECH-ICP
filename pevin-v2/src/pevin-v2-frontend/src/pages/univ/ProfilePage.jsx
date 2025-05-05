@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Row, Form, Table, Button, Nav, Navbar, InputGroup } from 'react-bootstrap';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Container, Col, Row, Table, Button, Nav, Navbar } from 'react-bootstrap';
+import { useLocation, Link } from 'react-router-dom';
 
 function ProfilePage() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   let formData = {};
   try {
@@ -21,7 +20,8 @@ function ProfilePage() {
     try {
       const dataToStore2 = localStorage.getItem('universityData');
       const parsedIjazah = dataToStore2 ? JSON.parse(dataToStore2) : [];
-      setIjazahList(parsedIjazah);
+      const dataArray = Array.isArray(parsedIjazah) ? parsedIjazah : [parsedIjazah];
+      setIjazahList(dataArray);
     } catch (error) {
       console.error('Data di localStorage.universityData tidak valid JSON:', error);
       setIjazahList([]);
@@ -34,13 +34,11 @@ function ProfilePage() {
     return 'Dashboard';
   };
 
-  // ... lanjutkan kode lainnya
-
   return (
-    <Container className="dashboard-container mt-5 mb-5">
+    <Container className="dashboard-container mb-5">
       <Row xs={1} sm={1} md={1} lg={2} className="g-4">
-        <Col xs={{ order: 'first' }} sm={{ order: 'first' }} md={{ order: 'first' }} lg={3}>
-          <Navbar expand="lg" className="bg-body-tertiary">
+        <Col lg={3}>
+          <Navbar expand="lg" className="custom-navbar">
             <Container fluid className="flex-column align-items-start">
               <div className="d-flex justify-content-between w-100 align-items-center">
                 <Navbar.Brand href={location.pathname}>{getTitle()}</Navbar.Brand>
@@ -63,124 +61,121 @@ function ProfilePage() {
                       Unggah Ijazah
                     </Nav.Link>
                   )}
+                  {location.pathname !== '/home' && (
+                    <Nav.Link as={Link} to="/home">
+                      Logout
+                    </Nav.Link>
+                  )}
                 </Nav>
               </Navbar.Collapse>
             </Container>
           </Navbar>
         </Col>
-        <Col xs={{ order: 'last' }} sm={{ order: 'last' }} md={{ order: 'last' }} lg={9}>
+        <Col lg={9}>
           <Row>
-            <Col xs={{ order: 'second' }} md={{ order: 'second' }} lg={{ order: 'second' }}>
-              <div className="regist-header mt-4">
-                <h1 className="regist-title">Dashboard</h1>
-                <p className="regist-subtitle">
-                  Selamat datang di {formData.universityName || '(nama universitas)'} !
+            <Col>
+              <div className="dashboard-header">
+                <h1 className="dashboard-title">Dashboard</h1>
+                <p className="dashboard-subtitle">
+                  Selamat datang di {formData.universityName || '(nama universitas)'}!
                 </p>
               </div>
 
-              <div className="cotainer-form">
-                <Row>
-                  <Col
-                    className="d-flex justify-content-center align-items-center"
-                    xs={{ order: 'first' }}
-                    sm={{ order: 'first' }}
-                    md={{ order: 'first' }}
-                    lg={4}
-                  >
-                    {formData.logo ? (
-                      <img
-                        src={formData.logo}
-                        alt="Logo Universitas"
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          maxHeight: '200px',
-                          objectFit: 'contain',
-                        }}
-                      />
-                    ) : (
-                      'Tidak ada logo'
-                    )}
-                  </Col>
-                  <Col xs={{ order: 'last' }} sm={{ order: 'last' }} md={{ order: 'last' }} lg={8}>
-                    <div className="regist-header">
-                      <Row className="regist-title">{formData.universityName}</Row>
-                    </div>
+              <Row className="profile-container mt-2">
+                <Col lg={4} className="d-flex justify-content-center align-items-center">
+                  {formData.logo ? (
+                    <img
+                      src={formData.logo}
+                      alt="Logo Universitas"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '200px',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  ) : (
+                    'Tidak ada logo'
+                  )}
+                </Col>
+                <Col lg={8}>
+                  <Row>
+                    <h4 className="regist-title">{formData.universityName}</h4>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Row className="form-label mt-2">Status</Row>
+                      <Row className="profile-text">{formData.status}</Row>
+                      <Row className="form-label mt-2">Akun Identity</Row>
+                      <Row className="profile-text">{formData.internetIdentity}</Row>
+                      <Row className="form-label mt-2">No. SK Pendirian</Row>
+                      <Row className="profile-text">{formData.skNumber}</Row>
+                      <Row className="form-label mt-2">Nomor Telepon</Row>
+                      <Row className="profile-text">{formData.phoneNumber}</Row>
+                      <Row className="form-label mt-2">Alamat</Row>
+                      <Row className="profile-text">{formData.address}</Row>
+                    </Col>
+                    <Col>
+                      <Row className="form-label mt-2">Akreditasi</Row>
+                      <Row className="profile-text">{formData.accreditation}</Row>
+                      <Row className="form-label mt-2">Website Resmi</Row>
+                      <Row className="profile-text">
+                        <a href={formData.website}>{formData.website}</a>
+                      </Row>
+                      <Row className="form-label mt-2">Tanggal Berdiri</Row>
+                      <Row className="profile-text">{formData.establishedDate}</Row>
+                      <Row className="form-label mt-2">Fax</Row>
+                      <Row className="profile-text">{formData.fax}</Row>
+                      <Row className="form-label mt-2">Kode Pos</Row>
+                      <Row className="profile-text">{formData.postalCode}</Row>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
 
-                    <Row>
-                      <Col>
-                        <Row className="form-label">Internet Identitiy Number</Row>
-                        <Row>{formData.internetIdentity}</Row>
-                        <Row className="form-label">Status</Row>
-                        <Row>{formData.status}</Row>
-                        <Row className="form-label">No. SK Pendirian</Row>
-                        <Row>{formData.skNumber}</Row>
-                        <Row className="form-label">Website Resmi</Row>
-                        <Row>
-                          <a href={formData.website}>{formData.website}</a>
-                        </Row>
-                      </Col>
-                      <Col>
-                        <Row className="form-label">Akreditasi</Row>
-                        <Row>{formData.accreditation}</Row>
-                        <Row className="form-label">Tanggal Berdiri</Row>
-                        <Row>{formData.establishedDate}</Row>
-                        <Row className="form-label">Alamat</Row>
-                        <Row>
-                          {formData.city}, {formData.province}
-                        </Row>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-                <Row>
-                  <Container className="dashboard-container mt-5 mb-5">
-                    <Table striped hover responsive>
-                      <thead>
+              <Row>
+                <Container className="mt-5 mb-5">
+                  <Table striped hover responsive>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Email</th>
+                        <th>Telepon</th>
+                        <th>Program Studi</th>
+                        <th>GPA</th>
+                        <th>Tahun Masuk</th>
+                        <th>Tahun Lulus</th>
+                        <th>Status</th>
+                        <th>Ijazah</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ijazahList.length === 0 ? (
                         <tr>
-                          <th>#</th>
-                          <th>Nama Mahasiswa</th>
-                          <th>Tahun Masuk</th>
-                          <th>Tahun Lulus</th>
-                          <th>Program Studi</th>
-                          <th>Gelar</th>
-                          <th>GPA</th>
-                          <th>Tanggal Terbit</th>
-                          <th>Nomor Ijazah</th>
-                          <th>Status</th>
-                          <th>File</th>
-                          <th>Aksi</th>
+                          <td colSpan="11">Belum ada data ijazah.</td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {ijazahList.length === 0 ? (
-                          <tr>
-                            <td colSpan="12">Belum ada data ijazah.</td>
-                          </tr>
-                        ) : (
-                          ijazahList.map((ijazah, index) => (
-                            <tr key={index}>
+                      ) : (
+                        ijazahList
+                          .sort((a, b) => b.graduationYear - a.graduationYear) // sort berdasarkan tahun lulus
+                          .map((ijazah, index) => (
+                            <tr key={ijazah.id}>
                               <td>{index + 1}</td>
-                              <td>{ijazah.mahasiswaName}</td>
+                              <td>{ijazah.sarjanaName}</td>
+                              <td>{ijazah.email}</td>
+                              <td>{ijazah.sarjanaPhoneNum}</td>
+                              <td>{ijazah.program}</td>
+                              <td>{ijazah.gpa}</td>
                               <td>{ijazah.entryYear}</td>
                               <td>{ijazah.graduationYear}</td>
-                              <td>{ijazah.program}</td>
-                              <td>{ijazah.degree}</td>
-                              <td>{ijazah.gpa}</td>
-                              <td>{ijazah.establishedDate}</td>
-                              <td>{ijazah.ijazahNumber}</td>
                               <td>{ijazah.statusValidasi}</td>
                               <td>
                                 {ijazah.ijazahFile ? (
                                   <img
                                     src={ijazah.ijazahFile}
-                                    alt="File Ijazah"
-                                    style={{
-                                      width: '100%',
-                                      height: 'auto',
-                                      maxHeight: '200px',
-                                      objectFit: 'contain',
-                                    }}
+                                    alt="Ijazah"
+                                    style={{ width: '100px', objectFit: 'contain' }}
                                   />
                                 ) : (
                                   'Tidak ada file'
@@ -191,12 +186,11 @@ function ProfilePage() {
                               </td>
                             </tr>
                           ))
-                        )}
-                      </tbody>
-                    </Table>
-                  </Container>
-                </Row>
-              </div>
+                      )}
+                    </tbody>
+                  </Table>
+                </Container>
+              </Row>
             </Col>
           </Row>
         </Col>

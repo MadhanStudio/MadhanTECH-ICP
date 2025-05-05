@@ -105,7 +105,7 @@ function RegistPage() {
 
   return (
     <Container className="regist-background">
-      <Row xs={1} md={1} lg={2} className="g-4">
+      <Row xs={1} md={1} lg={2}>
         <Col xs={{ order: 'second' }} md={{ order: 'second' }} lg={{ order: 'first' }}>
           <div className="regist-header mt-4">
             <h1 className="regist-title">Registrasi Perguruan Tinggi</h1>
@@ -335,8 +335,7 @@ function RegistPage() {
                   <td colSpan={2}>
                     <Form.Group>
                       <i>
-                        *Data yang disertakan merupakan data resmi dan sesuai dengan perguruan
-                        tinggi terkait
+                        *Pastikan data yang disertakan merupakan data resmi perguruan tinggi terkait
                       </i>
                     </Form.Group>
                   </td>
