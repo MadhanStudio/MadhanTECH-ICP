@@ -119,7 +119,7 @@ function EditProfilePage() {
   };
 
   return (
-    <Container className="dashboard-container mt-5 mb-5">
+    <Container className="dashboard-container mb-5">
       <Row xs={1} sm={1} md={1} lg={2} className="g-4">
         <Col xs={{ order: 'first' }} sm={{ order: 'first' }} md={{ order: 'first' }} lg={3}>
           <Navbar expand="lg" className="bg-body-tertiary">
@@ -143,6 +143,11 @@ function EditProfilePage() {
                   {location.pathname !== '/unggah-ijazah' && (
                     <Nav.Link as={Link} to="/unggah-ijazah">
                       Unggah Ijazah
+                    </Nav.Link>
+                  )}
+                  {location.pathname !== '/home' && (
+                    <Nav.Link as={Link} to="/home">
+                      Logout
                     </Nav.Link>
                   )}
                 </Nav>
@@ -330,7 +335,6 @@ function EditProfilePage() {
                     </tr>
                     <tr>
                       <td colSpan={2}>
-                        {' '}
                         <Form.Group controlId="postalCode">
                           <Form.Label>Kode Pos</Form.Label>
                           <Form.Control
