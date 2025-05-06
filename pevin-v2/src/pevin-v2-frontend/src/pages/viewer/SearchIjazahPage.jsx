@@ -41,7 +41,7 @@ function SearchIjazahPage() {
           src="/nav-pic.svg" 
           alt="Logo" 
           className="logo-ijazah" 
-          style={{ width: '300px', height: 'auto', marginLeft: 'auto', marginRight: '10px'}}  // Ukuran logo langsung diatur di sini
+          // style={{ width: '300px', height: 'auto', marginLeft: 'auto', marginRight: '10px'}}  // Ukuran logo langsung diatur di sini
         />
         <h1 className="title">Pusat Validasi Ijazah Nasional</h1>
       </div>
@@ -104,7 +104,7 @@ function SearchIjazahPage() {
                         </div>
                         <div>
                           <p className="label">Status</p>
-                          <p className="status">Valid <span className="check">✔</span></p>
+                          <p className="status"></p>
                         </div>
                     </div>
 
