@@ -35,8 +35,26 @@ PeVIN adalah platform desentralisasi berbasis blockchain yang memungkinkan prose
   - [DFX SDK (ICP)](https://internetcomputer.org/docs/current/developer-docs/quickstart/hello10mins)
 
 ### 2. Clone Repositori
+git clone https://github.com/MadhanStudio/MadhanTECH-ICP.git
 
-```bash
-git clone https://github.com/nama-akun/pevin.git
-cd pevin
+### 3. Jalankan Canister
+dfx start --background
+dfx deploy
 
+## 🔐 Alur Validasi Ijazah
+1. Admin institusi menginput data ijazah ke dalam sistem.
+2. Data dikonversi dan disimpan ke dalam blockchain (canister ICP).
+3. Pengguna dapat memverifikasi keabsahan ijazah melalui UI publik.
+4. Validasi dilakukan secara real-time dengan data on-chain yang immutable.
+
+## 👥 Tim Pengembang
+Project Lead:
+Burhanudin Yusuf Abdullah Ar Ramadhan
+
+Frontend Developer:
+Dhia Rafifah Thifal
+Adelia Khansa Rastiaputri
+
+Backend Developer:
+Mochammad Haidar Ridho
+P. Nanda Nandira Putra Perbawa
