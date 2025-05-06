@@ -58,3 +58,6 @@ Adelia Khansa Rastiaputri
 Backend Developer:
 Mochammad Haidar Ridho
 P. Nanda Nandira Putra Perbawa
+
+## Canister
+Backend: https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/?id=cvc72-niaaa-aaaad-qhkja-cai 
