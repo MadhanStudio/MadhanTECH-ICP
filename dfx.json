@@ -1,0 +1,31 @@
+  {
+  "canisters": {
+    "test_ijazah_backend": {
+      "main": "src/test_ijazah_backend/main.mo",
+      "type": "motoko"
+    },
+    "test_ijazah_frontend": {
+      "dependencies": [
+        "test_ijazah_backend"
+      ],
+      "source": [
+        "src/test_ijazah_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "test_ijazah_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    },
+    "serve": {
+      "headers": {
+        "Content-Security-Policy": "default-src 'self'; img-src 'self' data: blob:; script-src 'self' blob:; worker-src 'self' blob:;"
+      }
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
